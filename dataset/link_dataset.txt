@@ -1,0 +1,2 @@
+Link Dataset Tubercullosis :
+https://www.kaggle.com/tawsifurrahman/tuberculosis-tb-chest-xray-dataset
