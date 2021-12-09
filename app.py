@@ -7,35 +7,33 @@ from tensorflow.keras.models import load_model
 
 app = Flask(__name__)
 dict = {0 : 'Normal', 1 : 'TBC'}
-model = tf.keras.models.load_model('model.h5')
+model = tf.keras.models.load_model('model_capstone.h5')
 model.make_predict_function()
 
-@app.route('/', methods=['GET'])
-def hello_world():
+@app.route('/', methods=['GET', 'POST'])
+def main():
     return render_template('index.html')
     
-@app.route('/', methods=['POST'])
+@app.route('/submit', methods=['GET','POST'])
 def predict():
     imagefile = request.files['imagefile']
-    image_path = "./images/" + imagefile.filename
+    image_path = "static/" + imagefile.filename
     imagefile.save(image_path)
 
     image = load_img(image_path, target_size=(150,150))
     image = img_to_array(image)
     image = image.reshape((1, image.shape[0], image.shape[1], image.shape[2]))
-    # image = preprocess_input(image)
-    yhat = model.predict(image)
-    if yhat[0][0]>0:
-        desc = 'NORMAL'
-    elif yhat[0][1]>0:
-        desc = 'TUBERCULOSIS'
-    # label = decode_predictions(yhat)
-    # label = label[0][0]
+    
 
-    # classification = '%s (%.2f%%)' % (label[1], label[2]*100)
+    yhat = model.predict(image)
+    if yhat==0:
+        desc = 'NORMAL'
+    else:
+        desc = 'TUBERKULOSIS'
+    
     classification = '%s' % (desc)
 
-    return render_template('index.html', prediction=classification)
+    return render_template('index.html', prediction=classification, image=image_path)
 
 if __name__ == '__main__':
     app.run(port=3000, debug=True)
