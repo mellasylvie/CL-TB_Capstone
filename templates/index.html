@@ -1,21 +1,140 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>CL-TB APPS</title>
+    <title>CL-TB</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <style>
+      body{
+        font-family: 'Nunito', sans-serif;
+      }
+
+      h1,h2,h3,h4,h5,h6{
+        font-family: 'Quicksand', sans-serif;
+      }
+
+      .navbar-brand{
+        font-size: 32px;
+      }
+    </style>
   </head>
   <body>
-    <h1 class="text-center">TBC CLASSIFICATION</h1>
+    <!-- Nav -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5"  id="home">
+      <div class="container">
+        <a class="navbar-brand" href="#">CL - TB</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link" href="#home">Home</a>
+            <a class="nav-link" href="#predict">Predict</a>
+            <a class="nav-link" href="#info">Info</a>
+            <a class="nav-link" href="#about">About</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 pt-5">
+            <h1>
+              Classification <br>
+              Tuberculosis (CL-TB)
+            </h1>
+            <p>
+              Sistem berbasis machine learning yang dapat mengklasifikasikan<br>
+              dan memprediksi gambar chest x-ray ke dalam dua kategori<br>
+              (normal atau tuberkulosis) 
+            </p>
+            <button type="button" class="btn btn-secondary rounded-pill"><a href="#predict" style="text-decoration: none; color: white;"> Start Predict </a></button>
+          </div>
+          <div class="col-md-6 text-center">
+            <img src="../static/bg-2.png" alt="" width="450px">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- View Prediction -->
+    <div class="container-fluid text-dark p-5 text-center" style="background-color: #eeeeee;" id="predict">
+      <h2>Tuberculosis Classification</h2>
+      <p>Pilih file chest x-ray dan tekan tombol <b>"Predict image"</b> untuk mengetahui kategori gambar</p>
+      <div class="container">
+        <form class="p-3 text-center" action='/', method="post" enctype="multipart/form-data">
+          <input class="form-control" type="file" name="imagefile">
+          <input class="btn btn-secondary mt-3 rounded-pill" type="submit" value="Predict image">
+        </form>
 
-    <form class="p-3 text-center" action='/submit', method="post" enctype="multipart/form-data">
-      <input class="form-control" type="file" name="imagefile">
-      <input class="btn btn-primary mt-3" type="submit" value="Predict image">
-    </form>
-    
-    {% if prediction %}
-        <img src="{{image}}" class="rounded mx-auto d-block" height="300px" width="300px" alt="Gambar Chest X-Ray"><br>
-        <p class="text-center"> Hasil prediksi Chest-X-Ray ini termasuk dalam kategori <b>{{prediction}}</b></p>
-    {% endif %}
-
+      </div>
+      
+      {% if prediction %}
+      <img src="{{image}}" alt="" width="250px">
+      <p class="text-center pt-2"><b>Gambar chest x-ray masuk ke dalam kategori {{prediction}}</b></p>
+      {% endif %}
+    </div>
+    <!-- View Information -->
+    <div class="container-fluid p-5 text-center" id="info">
+      <div class="row pb-5">
+        <div class="col-md-12 text-center">
+          <h2>Information</h2>
+          <small>Ketahui lebih lanjut informasi terkait aplikasi CL-TB</small>
+        </div>
+      </div>
+      <div class="row mb-4 d-flex justify-content-center">
+        <div class="col-md-7">
+          <div class="card text-dark" style="background-color: #eeeeee; height: 175px;">
+            <div class="card-body">
+              <h4 class="card-title">Apa itu CL-TB?</h4>
+              <p class="card-text">CB-TB merupakan sistem berbasis website yang memanfaatkan konsep machine learning
+                untuk mengklasifikasikan hasil gambar chest x-ray ke dalam kategori normal atau tuberkulosis.
+                Sistem ini dibuat untuk membantu dokter dan para ahli dalam mendiagnosis hasil chest x-ray pasien.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-7">
+          <div class="card text-dark" style="background-color: #eeeeee; height: 175px;">
+            <div class="card-body">
+              <h4 class="card-title">Petunjuk Penggunaan CL-TB</h4>
+              <p class="card-text">Pertama-tama, pilih menu <b>Predict</b>. Pada bagian menu tersebut, tekan tombol <b>Pilih File</b> untuk mengunggah gambar chest x-ray. Kemudian tekan tombol <b>Predict image</b> untuk melihat hasil prediksi gambar.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-4 mb-4 d-flex justify-content-center">
+        <div class="col-md-7">
+          <div class="card text-dark" style="background-color: #eeeeee; height: 175px;">
+            <div class="card-body">
+              <h4 class="card-title">Dataset Reference</h4>
+              <p class="card-text">Tawsifur Rahman, Amith Khandakar, Muhammad A. Kadir, Khandaker R. Islam, Khandaker F. Islam, Zaid B. Mahbub, Mohamed Arselene Ayari, Muhammad E. H. Chowdhury. 
+                (2020) "Reliable Tuberculosis Detection using Chest X-ray with Deep Learning, Segmentation and Visualization". 
+                IEEE Access, Vol. 8, pp 191586 - 191601. DOI. 10.1109/ACCESS.2020.3031384.
+                <a href="https://ieeexplore.ieee.org/document/9224622" target="_blank"><strong>Paper Link</strong></a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid" id="about">
+      <div class="row bg-dark text-light">
+        <div class="col-md-4 p-5">
+          <h5>About Us</h5>
+          <p>Team Penyusun : CSD-087</p>
+        </div>
+        <div class="col-md-4 p-5">
+          <p>M014V1039 - Marissa Audina</p>
+          <p>M332V6344 - Mellania Permata Sylvie</p>
+        </div>
+        <div class="col-md-4 p-5">
+          <i class="fab fa-github fa-2x" style="padding: 5px; margin-left: 30%;"></i>
+          <i class="fas fa-file-alt fa-2x"></i>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
