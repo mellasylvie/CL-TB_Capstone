@@ -6,31 +6,28 @@ from tensorflow import keras
 from tensorflow.keras.models import load_model
 
 app = Flask(__name__)
-dict = {0 : 'Normal', 1 : 'TBC'}
-model = tf.keras.models.load_model('model_capstone.h5')
+model = tf.keras.models.load_model('model.h5')
 model.make_predict_function()
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def main():
     return render_template('index.html')
     
-@app.route('/submit', methods=['GET','POST'])
+@app.route('/', methods=['POST'])
 def predict():
     imagefile = request.files['imagefile']
-    image_path = "static/" + imagefile.filename
+    image_path = "./static/" + imagefile.filename
     imagefile.save(image_path)
 
     image = load_img(image_path, target_size=(150,150))
     image = img_to_array(image)
     image = image.reshape((1, image.shape[0], image.shape[1], image.shape[2]))
-    
-
-    yhat = model.predict(image)
-    if yhat==0:
+    pred = model.predict(image)
+    if pred[0][0]>0:
         desc = 'NORMAL'
-    else:
-        desc = 'TUBERKULOSIS'
-    
+    elif pred[0][1]>0:
+        desc = 'TUBERCULOSIS'
+
     classification = '%s' % (desc)
 
     return render_template('index.html', prediction=classification, image=image_path)
