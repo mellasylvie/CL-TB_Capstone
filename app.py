@@ -23,9 +23,9 @@ def predict():
     image = img_to_array(image)
     image = image.reshape((1, image.shape[0], image.shape[1], image.shape[2]))
     pred = model.predict(image)
-    if pred[0][0]>0:
+    if pred==0:
         desc = 'NORMAL'
-    elif pred[0][1]>0:
+    elif pred==1:
         desc = 'TUBERCULOSIS'
 
     classification = '%s' % (desc)
